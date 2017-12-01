@@ -21,7 +21,7 @@ public class Day01Processor {
         int acc = 0;
         for(int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == input.charAt(indexCalculator.apply(input, i))) {
-                acc += Integer.parseInt(String.valueOf(input.charAt(i)));
+                acc += Character.getNumericValue(input.charAt(i));
             }
         }
         return acc;
