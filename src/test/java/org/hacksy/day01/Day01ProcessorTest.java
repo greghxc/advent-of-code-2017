@@ -1,8 +1,13 @@
 package org.hacksy.day01;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 

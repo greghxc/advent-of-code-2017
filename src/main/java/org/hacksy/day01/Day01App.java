@@ -6,7 +6,7 @@ public class Day01App {
 
         Day01Processor processor = new Day01Processor();
 
-        System.out.println(String.format("Part 1: %s", processor.partOne(input)));
-        System.out.println(String.format("Part 2: %s", processor.partTwo(input)));
+        System.out.println(String.format("Day 1 - Part 1: %s", processor.partOne(input)));
+        System.out.println(String.format("Day 1 - Part 2: %s", processor.partTwo(input)));
     }
 }
