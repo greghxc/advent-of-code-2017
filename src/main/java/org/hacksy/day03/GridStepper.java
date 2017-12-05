@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.List;
 import java.util.function.Function;
 
+// go fast, turn left
 public class GridStepper {
     Point currentPosition;
     int currentForwardFunction;

@@ -8,11 +8,13 @@ import java.util.Map;
 import java.util.function.Function;
 
 class Day03Processor {
+    // Reimplemented using stepper. Original pen & paper mathy solution in history.
     int partOne(int start) {
         Point location = indexToPoint(start - 1);
         return Math.abs(location.x) + Math.abs(location.y);
     }
 
+    // Use a stepper to walk the grid. I expect there is an elegant mathy way to do this.
     int partTwo(int maxValue) {
         Point origin = new Point(0,0);
         Map<Point, Integer> pointToValue = new HashMap<>();
@@ -33,6 +35,7 @@ class Day03Processor {
         return currentLocationValue;
     }
 
+    // get coords for any index by walking the grid
     Point indexToPoint(int index) {
         Map<Point, Integer> pointToIndex = new HashMap<>();
         Map<Integer, Point> indexToPoint = new HashMap<>();
@@ -48,16 +51,19 @@ class Day03Processor {
         return indexToPoint.get(index);
     }
 
+    // Sorta hacky, we can use our stepper here to walk around our origin point to find neighbors.
     List<Point> neighborsFrom(Point centerPoint) {
         GridStepper stepper = new GridStepper(centerPoint);
         List<Point> neighbors = new ArrayList<>();
 
+        // 9 is number of steps required to circle a point
         for(int i = 0; i < 9; i++) {
             neighbors.add(stepper.getCurrentPosition());
             stepper.stepForward();
             if(!neighbors.contains(stepper.peekLeft())){stepper.turnLeft();}
         }
 
+        // Origin isn't a neighbor.
         neighbors.remove(centerPoint);
         return neighbors;
     }
