@@ -1,10 +1,7 @@
 package org.hacksy.day03;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 class Day03Processor {
@@ -37,18 +34,16 @@ class Day03Processor {
 
     // get coords for any index by walking the grid
     Point indexToPoint(int index) {
-        Map<Point, Integer> pointToIndex = new HashMap<>();
-        Map<Integer, Point> indexToPoint = new HashMap<>();
+        Set<Point> visitedPoints = new HashSet<>();
         GridStepper stepper = new GridStepper();
 
-        for(int i = 0; i <= index; i++) {
-            pointToIndex.put(stepper.getCurrentPosition(), i);
-            indexToPoint.put(i, stepper.getCurrentPosition());
+        for(int i = 0; i < index; i++) {
+            visitedPoints.add(stepper.getCurrentPosition());
             stepper.stepForward();
-            if(!pointToIndex.containsKey(stepper.peekLeft())){stepper.turnLeft();}
+            if(!visitedPoints.contains(stepper.peekLeft())){stepper.turnLeft();}
         }
 
-        return indexToPoint.get(index);
+        return stepper.getCurrentPosition();
     }
 
     // Sorta hacky, we can use our stepper here to walk around our origin point to find neighbors.
