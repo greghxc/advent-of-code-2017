@@ -1,21 +1,64 @@
 package org.hacksy.day03;
 
-import com.google.common.math.IntMath;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-import java.awt.*;
-import java.math.RoundingMode;
+class Day03Processor {
+    int partOne(int start) {
+        Point location = indexToPoint(start - 1);
+        return Math.abs(location.x) + Math.abs(location.y);
+    }
 
-public class Day03Processor {
-    // what I did on paper, but in code. not very program-y.
-    // part two requires a different solution, will come back.
-    public int stepsPartOne(int start) {
-        if (start == 1) { return 0; }
+    int partTwo(int maxValue) {
+        Point origin = new Point(0,0);
+        Map<Point, Integer> pointToValue = new HashMap<>();
+        GridStepper stepper = new GridStepper(origin);
 
-        int root = IntMath.sqrt(start, RoundingMode.UP);
-        int lengthOfRow = root - root % 2;
-        int origMod = (start - 1) % lengthOfRow;
-        int diff = origMod - lengthOfRow / 2;
+        int currentLocationValue = 1;
+        pointToValue.put(origin, currentLocationValue);
 
-        return Math.abs(diff) + lengthOfRow / 2;
+        while (currentLocationValue < maxValue) {
+            Function<Point, Integer> valueCalc = (_origin) -> neighborsFrom(stepper.getCurrentPosition()).stream()
+                    .mapToInt((point) -> pointToValue.getOrDefault(point, 0))
+                    .sum();
+            pointToValue.computeIfAbsent(stepper.getCurrentPosition(), valueCalc);
+            currentLocationValue = pointToValue.get(stepper.getCurrentPosition());
+            stepper.stepForward();
+            if(!pointToValue.containsKey(stepper.peekLeft())){stepper.turnLeft();}
+        }
+        return currentLocationValue;
+    }
+
+    Point indexToPoint(int index) {
+        Map<Point, Integer> pointToIndex = new HashMap<>();
+        Map<Integer, Point> indexToPoint = new HashMap<>();
+        GridStepper stepper = new GridStepper();
+
+        for(int i = 0; i <= index; i++) {
+            pointToIndex.put(stepper.getCurrentPosition(), i);
+            indexToPoint.put(i, stepper.getCurrentPosition());
+            stepper.stepForward();
+            if(!pointToIndex.containsKey(stepper.peekLeft())){stepper.turnLeft();}
+        }
+
+        return indexToPoint.get(index);
+    }
+
+    List<Point> neighborsFrom(Point centerPoint) {
+        GridStepper stepper = new GridStepper(centerPoint);
+        List<Point> neighbors = new ArrayList<>();
+
+        for(int i = 0; i < 9; i++) {
+            neighbors.add(stepper.getCurrentPosition());
+            stepper.stepForward();
+            if(!neighbors.contains(stepper.peekLeft())){stepper.turnLeft();}
+        }
+
+        neighbors.remove(centerPoint);
+        return neighbors;
     }
 }
