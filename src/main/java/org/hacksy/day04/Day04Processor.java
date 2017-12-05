@@ -38,7 +38,7 @@ class Day04Processor {
         return true;
     }
 
-    private int partOne(File file, Function<String, Boolean> definition) throws Exception{
+    private int processFile(File file, Function<String, Boolean> definition) throws Exception{
         try (Stream<String> stream = Files.lines(Paths.get(file.toURI()))) {
             return stream
                     .mapToInt(line -> definition.apply(line) ? 1 : 0)
@@ -47,10 +47,10 @@ class Day04Processor {
     }
 
     public int partOne(File file) throws Exception {
-       return partOne(file, this::validPasswordPartOne);
+       return processFile(file, this::validPasswordPartOne);
     }
 
     public int partTwo(File file) throws Exception {
-        return partOne(file, this::validPasswordPartTwo);
+        return processFile(file, this::validPasswordPartTwo);
     }
 }
