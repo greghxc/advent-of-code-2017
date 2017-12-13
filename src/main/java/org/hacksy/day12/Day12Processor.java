@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day12Processor {
+class Day12Processor {
     Integer partOne(File file) {
         List<String> lines = FileUtil.fileToStringList(file);
         QuickFind qf = buildQuickFind(lines);
