@@ -10,20 +10,17 @@ import java.util.stream.Collectors;
 
 class Day13Processor {
     Integer partOne(File file) {
-        List<String> lines = FileUtil.fileToStringList(file);
         BiFunction<Integer, Integer, Integer> calc = (depth, range) -> depth * range;
-        return severity(lineParser(lines), 0, calc);
+        return severity(lineParser(FileUtil.fileToStringList(file)), 0, calc);
     }
 
     Integer partTwo(File file) {
-        List<String> lines = FileUtil.fileToStringList(file);
         BiFunction<Integer, Integer, Integer> calc = (_depth, _range) -> 1;
-        List<List<Integer>> parsedLines = lineParser(lines);
+        List<List<Integer>> parsedLines = lineParser(FileUtil.fileToStringList(file));
 
-        Integer i = 0;
         Integer result = null;
 
-        while(null == result){
+        for(int i = 0; result == null; i++){
             if (severity(parsedLines, i, calc) == 0) { result = i; } else { i++; }
         }
 
