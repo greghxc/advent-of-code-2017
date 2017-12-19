@@ -10,13 +10,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class Day10Processor {
+public class Day10Processor {
     Integer partOne(List<Integer> ribbon, List<Integer> jumps) {
         ribbon = ribbonProc(ribbon, jumps, 1);
         return ribbon.get(0) * ribbon.get(1);
     }
 
-    String partTwo(String input) {
+    public String partTwo(String input) {
         List<Integer> ribbon =
                 ribbonProc(buildRibbon(256), prepareInput(input, Lists.newArrayList(17, 31, 73, 47, 23)), 64);
         return hash(Lists.partition(ribbon, 16).stream()
