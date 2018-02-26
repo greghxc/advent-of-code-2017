@@ -34,9 +34,7 @@ public class Program {
     boolean executeNext() {
         if (!hasNext()) { return false; }
         try {
-            System.out.println(String.format("%s: %s", currentInstruction.intValue(), instructions.get(currentInstruction.intValue())));
             execute(instructions.get(currentInstruction.intValue()));
-            printRegisters();
         } catch (NoMessageException nme) {
             return false;
         }
